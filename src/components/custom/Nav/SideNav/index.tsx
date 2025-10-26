@@ -6,14 +6,17 @@ import {
   SidebarGroupContent,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { LayoutDashboard, ShieldCheck, Wallet } from "lucide-react";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
 export function SideNavigation() {
+  const { open } = useSidebar();
   const navs: { url: string; label: string; icon: ReactNode }[] = [
     { icon: <LayoutDashboard />, url: "/", label: "Dashboard" },
     {
@@ -25,16 +28,23 @@ export function SideNavigation() {
   ];
 
   return (
-    <Sidebar className="bg-[#012B54] text-white" collapsible="icon">
-      <SidebarHeader className="bg-[#012B54]">Header</SidebarHeader>
-      <SidebarContent className="bg-[#012B54]">
+    <Sidebar collapsible="icon">
+      <SidebarHeader className="primaryBackground">
+        <div className="flex flex-row items-center gap-2">
+          <Link to={"/"}>
+            <img src="/appLogo.svg" />
+          </Link>
+          {open && <p>Kalinga ng Bayan</p>}
+        </div>
+      </SidebarHeader>
+      <SidebarContent className="primaryBackground">
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
                 {navs.map((nav, index) => (
-                  <SidebarMenuButton asChild>
-                    <Link to={nav.url} key={`${nav.label} - ${index}`}>
+                  <SidebarMenuButton key={`${nav.label} - ${index}`} asChild>
+                    <Link to={nav.url}>
                       {nav.icon}
                       <span>{nav.label}</span>
                     </Link>
@@ -46,7 +56,6 @@ export function SideNavigation() {
         </SidebarGroup>
         <SidebarGroup />
       </SidebarContent>
-      <SidebarFooter className="bg-[#012B54]">Footer</SidebarFooter>
     </Sidebar>
   );
 }

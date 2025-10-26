@@ -7,10 +7,10 @@ export default function AppLayout() {
     <SidebarProvider>
       <SideNavigation />
       <main className="flex flex-col w-full">
-        <section className="">
+        <section>
           <SidebarTrigger />
         </section>
-        <section className="h-full p-2">
+        <section className="h-full py-2 px-5">
           <Outlet />
         </section>
       </main>
