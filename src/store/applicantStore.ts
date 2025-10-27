@@ -8,6 +8,8 @@ type ApplicantState = {
 
 type ApplicantActions = {
     toggleSheet: () => void
+    setActiveApplicant: (applicant: ApplicantType)=> void
+
 }
 
 type ApplicantStoreType = ApplicantState & ApplicantActions
@@ -19,6 +21,11 @@ export const useApplicantStore = create<ApplicantStoreType>((set, get) => ({
         const open = get().isSheetOpen
         set({
             isSheetOpen: !open
+        })
+    },
+    setActiveApplicant: (applicant)=>{
+        set({
+           selectedApplicant: applicant
         })
     }
 }))
