@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Fingerprint } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import type { UseFormSetValue } from "react-hook-form";
+import type { TFields } from "..";
 
 interface WebSocketMessage {
     type: string;
@@ -11,20 +13,23 @@ interface WebSocketMessage {
 interface ServerResponse {
     status?: string;
     message?: string;
-    result?: any;
+    result?: {
+        fingerprint_b64?: string
+    };
     base64Image?: any;
 }
 
-export default function FingerPrintScanner() {
+export default function FingerPrintScanner({setValue}:{setValue:UseFormSetValue<TFields>}) {
 
     const wsRef = useRef<WebSocket | null>(null);
-    const [fingerprint, setFingerprintImage] = useState<string | null>(null);
+    const [wsMessage, setWsMessage] = useState<string |null>(null)
+    const [status, setStatus] = useState<string | null>(null)
+    const [isInitialized, setIsInitialized] = useState(false)
 
     useEffect(() => {
-        // Connect to WebSocket
+    
         connectWebSocket();
 
-        // Cleanup on unmount
         return () => {
             if (wsRef.current) {
                 wsRef.current.close();
@@ -43,11 +48,23 @@ export default function FingerPrintScanner() {
             const data: ServerResponse = JSON.parse(event.data);
             console.log('Received:', data);
 
-            if (data.result?.base64Image) {
-                const imageDataUrl = `data:image/png;base64,${data.result.base64Image}`;
-                setFingerprintImage(imageDataUrl);
-                console.log(imageDataUrl)
+            setIsInitialized(true)
+
+            if(data.message){
+                setWsMessage(data.message)
             }
+
+            if(data.status) setStatus(data.status)        
+
+            if(data?.result?.fingerprint_b64){
+                setValue('b64fp',data.result.fingerprint_b64)
+            }
+
+            // if (data.result?.base64Image) {
+            //     const imageDataUrl = `data:image/png;base64,${data.result.base64Image}`;
+            //     setFingerprintImage(imageDataUrl);
+            //     console.log(imageDataUrl)
+            // }
 
         };
 
@@ -83,16 +100,17 @@ export default function FingerPrintScanner() {
                 <div className="w-1/2 flex flex-col gap-5">
                     <Card className="mx-auto">
                         <CardContent>
-                            {!fingerprint && <Fingerprint size={90} className="mx-auto" />}
-                            {fingerprint && <img src={fingerprint} alt="fingerprint" className="w-full h-full object-cover" />}
+                            {status==="complete" ? <img src="/valid.svg" className="mx-auto w-70"/> : <Fingerprint  className="mx-auto" size={80} />}
                         </CardContent>
                     </Card>
-                    <Button onClick={() => sendTrigger('scan')}>Fingerprint Capture</Button>
+                    {/* <Button onClick={() => sendTrigger('scan')}>Fingerprint Capture</Button> */}
+                    <Button type="button" disabled={(status==="processing" || status === "complete") || isInitialized} onClick={() => sendTrigger('register')}>Register</Button>
+                    {wsMessage && <p className={`text-center ${status === "processing" ? "text-orange-400" : status === "complete" ? "text-green-500" : ""}`}>{wsMessage}</p>}
+                    <p>Date Verified: {new Date().toDateString()}</p>
                 </div>
                 <div className=" flex flex-col gap-5 place-self-start">
-                    <p>Verification Status:</p>
-                    <p>Verified by:</p>
-                    <p>Date Verified: {new Date().toDateString()}</p>
+                    {/* <p>Verification Status:</p>
+                    <p>Verified by:</p> */}
                 </div>
             </div>
         </div>

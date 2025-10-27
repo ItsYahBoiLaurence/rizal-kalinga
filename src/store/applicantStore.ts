@@ -1,3 +1,4 @@
+import type { TFields } from '@/pages/onsite-verification/ApplicantProfile'
 import type { ApplicantType } from '@/types/applicant'
 import { create } from 'zustand'
 
@@ -9,7 +10,7 @@ type ApplicantState = {
 type ApplicantActions = {
     toggleSheet: () => void
     setActiveApplicant: (applicant: ApplicantType)=> void
-
+    submitForms: (data: TFields)=>void
 }
 
 type ApplicantStoreType = ApplicantState & ApplicantActions
@@ -27,5 +28,6 @@ export const useApplicantStore = create<ApplicantStoreType>((set, get) => ({
         set({
            selectedApplicant: applicant
         })
-    }
+    },
+    submitForms:(data)=>console.log(data)
 }))
