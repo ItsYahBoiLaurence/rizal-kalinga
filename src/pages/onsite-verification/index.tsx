@@ -5,10 +5,6 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { Search } from "lucide-react";
-import Check from "/check.svg";
-import Error from "/error.svg";
-import Expense from "/expense.svg";
-import Time from "/time.svg";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
   Table,
@@ -18,20 +14,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
 import ApplicantProfile from "./ApplicantProfile";
 import type { ApplicantType } from "@/types/applicant";
 import { useApplicantStore } from "@/store/applicantStore";
 
 export default function OnSiteVerification() {
   const { toggleSheet, setActiveApplicant } = useApplicantStore();
-
-  const reports: { icon: string; count: number; title: string }[] = [
-    { icon: Expense, count: 90, title: "Total Disbursed" },
-    { icon: Check, count: 20, title: "Total Approved" },
-    { icon: Error, count: 140, title: "Total Application Submitted" },
-    { icon: Time, count: 35, title: "Pending for Approval" },
-  ];
 
   const columns: { label: string }[] = [
     { label: "reference no." },

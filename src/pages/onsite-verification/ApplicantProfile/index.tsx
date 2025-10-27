@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import {
@@ -19,21 +18,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useApplicantStore } from "@/store/applicantStore";
-import type { ApplicantType } from "@/types/applicant";
-import { Fingerprint } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import FingerPrintScanner from "./FingerPrintScanner";
 
-type FieldType = {
-  fieldLabel: string;
-  fieldKey: keyof ApplicantType;
-};
-
 export default function ApplicantProfile() {
   const [verification, setVerification] = useState<boolean>(false);
   const { selectedApplicant } = useApplicantStore();
-  const [fingerprint,setFingerprint] = useState<string | null>(null);
 
 
   console.log(selectedApplicant);

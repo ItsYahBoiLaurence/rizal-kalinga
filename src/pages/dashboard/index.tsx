@@ -1,14 +1,12 @@
 import {
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
 } from "@/components/ui/card";
 import Check from "/check.svg";
 import Error from "/error.svg";
 import Expense from "/expense.svg";
 import Time from "/time.svg";
-import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,

@@ -2,13 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Fingerprint } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import type { UseFormRegister } from "react-hook-form";
-
-interface Message {
-    sender: string;
-    text: string;
-    time: string;
-}
 
 interface WebSocketMessage {
     type: string;
