@@ -58,7 +58,8 @@ export const useApplicantStore = create<ApplicantStoreType>((set, get) => ({
             mothersSuffix: data.mothersSuffix,
             mothersBirthPlace: data.mothersBirthPlace,
             mothersOccupation: data.mothersOccupation,
-            b64fp: data.b64fp
+            b64fp: data.b64fp,
+            img: data.img
         }]).select()
         return {supabaseData, error}
     }

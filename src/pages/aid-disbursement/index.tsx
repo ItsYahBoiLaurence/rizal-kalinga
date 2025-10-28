@@ -172,6 +172,7 @@ export default function AidDisbursement() {
         
         {info && info.length !== 0 && 
         (<div className="flex flex-col gap-2">
+          <img src={info[0].img} alt="image" className="w-[300px] border rounded" />
           <p>First Name: <span className="font-bold">{info[0].firstName}</span></p>    
           <p>Middle Name: <span className="font-bold">{info[0].middleName}</span></p>
           <p>Last Name: <span className="font-bold">{info[0].lastName}</span></p>

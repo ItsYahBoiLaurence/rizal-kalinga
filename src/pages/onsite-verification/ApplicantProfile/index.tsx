@@ -21,6 +21,7 @@ import { useApplicantStore } from "@/store/applicantStore";
 import { useState, useEffect } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import FingerPrintScanner from "./FingerPrintScanner";
+import ImageCaptureComponent from "./ImageCapture";
 
 export type TFields = {
   firstName: string,
@@ -49,7 +50,8 @@ export type TFields = {
   mothersSuffix: string,
   mothersBirthPlace: string,
   mothersOccupation: string,
-  b64fp: string
+  b64fp: string,
+  img:string
 }
 
 export default function ApplicantProfile() {
@@ -86,7 +88,8 @@ export default function ApplicantProfile() {
       mothersSuffix: "",
       mothersBirthPlace: "",
       mothersOccupation: "",
-      b64fp: ""
+      b64fp: "",
+      img: ""
     },
   });
 
@@ -119,6 +122,7 @@ export default function ApplicantProfile() {
         mothersSuffix: selectedApplicant.mothersSuffix,
         mothersBirthPlace: selectedApplicant.mothersBirthPlace,
         mothersOccupation: selectedApplicant.mothersOccupation,
+        img:""
       });
     }
   }, [selectedApplicant, reset]);
@@ -340,6 +344,7 @@ export default function ApplicantProfile() {
           ) : (
             <div className="px-5 flex flex-col gap-5 overflow-auto">
               <div className="grid gap-2">
+              <ImageCaptureComponent setValue={setValue}/>
                 <p>Name: <span className="font-bold">{selectedApplicant?.firstName} {selectedApplicant?.middleName} {selectedApplicant?.lastName} {selectedApplicant?.suffix} </span> </p>
                 <p>Date of Birth: <span className="font-bold">{selectedApplicant?.birthDate} </span> </p>
                 <p>Address: <span className="font-bold">{selectedApplicant?.region} {selectedApplicant?.province} {selectedApplicant?.cityMunicipality} {selectedApplicant?.barangay} {selectedApplicant?.streetHouseNo} </span> </p>
@@ -347,6 +352,7 @@ export default function ApplicantProfile() {
                 <p>Reference No. : <span className="font-bold">{selectedApplicant?.referrenceNumber} </span> </p>
               </div>
               <div>
+
                 <FingerPrintScanner setValue={setValue} />
               </div>
               <div>

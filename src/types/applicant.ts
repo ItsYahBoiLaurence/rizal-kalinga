@@ -39,4 +39,5 @@ export type ApplicantType = {
   mothersSuffix: string
   mothersBirthPlace: string
   mothersOccupation: string
+  img: string
 }
