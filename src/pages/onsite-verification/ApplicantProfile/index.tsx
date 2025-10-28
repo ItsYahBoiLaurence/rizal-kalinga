@@ -79,7 +79,6 @@ export default function ApplicantProfile() {
       fathersMiddleName: "",
       fathersLastName: "",
       fathersSuffix: "",
-      fathersBirthPlace: "",
       fathersOccupation: "",
       mothersFirstName: "",
       mothersMiddleName: "",
@@ -126,9 +125,16 @@ export default function ApplicantProfile() {
 
 
   const { isSheetOpen, toggleSheet, submitForms } = useApplicantStore();
-  const onsubmit: SubmitHandler<TFields> = (data) => {
-    submitForms(data)
-    toggleSheet()
+  const onsubmit: SubmitHandler<TFields> = async (data) => {
+    try{
+      const { supabaseData, error} = await submitForms(data)
+      if(error) throw error
+      console.log(supabaseData)
+      toggleSheet()
+    }catch(e){
+      console.log(e)
+    }
+
   }
 
   return (
